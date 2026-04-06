@@ -1,0 +1,54 @@
+:root{
+  --bg:#0a0e17; --card:#151c2c; --accent:#00f5a0;
+  --text:#e6e9ef; --muted:#8a94a6; --danger:#ff4757;
+  --gradient:linear-gradient(135deg,#667eea 0%,#f093fb 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;
+}
+.container{max-width:1400px;margin:0 auto;padding:1rem}
+.header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 0;border-bottom:1px solid #2a3447;margin-bottom:2rem;
+}
+.logo{font-size:1.5rem;font-weight:800;background:var(--gradient);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.card{
+  background:var(--card);border-radius:16px;padding:1.25rem;
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);border:1px solid #2a3447;
+}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.stock-card{
+  cursor:pointer;transition:transform 0.2s,border-color 0.2s;
+  position:relative;overflow:hidden;
+}
+.stock-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.stock-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--gradient);opacity:0;transition:opacity 0.2s;
+}
+.stock-card:hover::before{opacity:1}
+.price{font-size:1.5rem;font-weight:700;color:var(--accent)}
+.btn{
+  background:var(--gradient);color:#fff;border:none;padding:0.75rem 1.5rem;
+  border-radius:12px;font-weight:600;cursor:pointer;transition:opacity 0.2s;
+}
+.btn:hover{opacity:0.9}.btn:disabled{opacity:0.5;cursor:not-allowed}
+.badge{
+  display:inline-block;padding:0.25rem 0.75rem;border-radius:999px;
+  font-size:0.75rem;font-weight:600;background:#2a3447;color:var(--muted)
+}
+.bot-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.bot-card{border-left:4px solid var(--accent)}
+.bot-card.security{border-color:#4ade80}.bot-card.ai{border-color:#a78bfa}
+.bot-card.custom{border-color:#fbbf24}
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,0.8);
+  display:flex;align-items:center;justify-content:center;z-index:1000;
+}
+.modal-content{background:var(--card);padding:2rem;border-radius:20px;max-width:500px;width:90%}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+.loading{animation:pulse 1.5s infinite}
