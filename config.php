@@ -29,6 +29,6 @@ function generateSecret() {
 
 function getMistralKey() {
     global $MISTRAL_KEYS;
-    return $MISTRALS_KEYS[array_rand($MISTRAL_KEYS)];
+    return $MISTRAL_KEYS[array_rand($MISTRAL_KEYS)];
 }
 ?>
