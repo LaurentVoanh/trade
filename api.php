@@ -7,8 +7,39 @@ $db = getDB();
 
 $action = $_GET['action'] ?? '';
 
-// Vérif auth pour toutes les actions sauf logout
-if($action !== 'logout' && !isset($_SESSION['user_id'])) {
+// Gestion de la connexion par mot de passe
+if($action === 'login') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    if(empty($data['password'])) {
+        echo json_encode(['error'=>'Mot de passe requis']); exit;
+    }
+    
+    // Chercher un utilisateur avec ce mot de passe
+    $stmt = $db->prepare("SELECT * FROM users WHERE password_hash IS NOT NULL");
+    $stmt->execute();
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $found = false;
+    foreach($users as $user) {
+        if(password_verify($data['password'], $user['password_hash'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['is_anonymous'] = false;
+            echo json_encode(['success'=>true, 'user'=>['id'=>$user['id'], 'username'=>$user['username']]]);
+            $found = true;
+            break;
+        }
+    }
+    
+    if(!$found) {
+        http_response_code(401);
+        echo json_encode(['error'=>'Mot de passe incorrect']);
+    }
+    exit;
+}
+
+// Vérif auth pour toutes les actions sauf logout et login
+if($action !== 'logout' && $action !== 'login' && !isset($_SESSION['user_id'])) {
     http_response_code(401);
     echo json_encode(['error'=>'Unauthorized']); exit;
 }

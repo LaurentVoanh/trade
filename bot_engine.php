@@ -1,6 +1,6 @@
 <?php
 // bot_engine.php
-require 'config.php';
+require_once 'config.php';
 
 class BotEngine {
     private $db, $apiKey;
