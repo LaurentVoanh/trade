@@ -1,6 +1,6 @@
 <?php
 // init.php - À exécuter UNE FOIS
-require 'config.php';
+require_once 'config.php';
 $db = getDB();
 
 // Charger le schema
@@ -19,6 +19,7 @@ $adjs = ['Mega','Ultra','Super','Hyper','Nano','Quantum','Cyber','Neo','Astro','
 $nouns = ['Coin','Token','Chain','Swap','Fi','Doge','Cat','Rocket','Pizza','Coffee'];
 $emojis = ['🚀','🌙','💎','🔥','🦄','🎮','🎨','🤖','🧠','⚡'];
 $categories = ['meme','defi','gaming','ai','nft','social','utility','privacy'];
+$descriptions = ['La révolution arrive !','HODL or die 🤝','To the moon & back','DYOR but trust vibes','Community powered ✨'];
 
 $stmt = $db->prepare('INSERT OR IGNORE INTO stocks (symbol,name,description,category,price,volatility) VALUES (?,?,?,?,?,?)');
 
@@ -28,7 +29,7 @@ for($i=0;$i<400;$i++){
     $symbol = strtoupper(substr($adj,0,3).substr($noun,0,2)).rand(1,9);
     $name = "$adj $noun".($i>200?" X":"");
     $emoji = $emojis[array_rand($emojis)];
-    $desc = "$emoji $name - ".['La révolution arrive !','HODL or die 🤝','To the moon & back','DYOR but trust vibes','Community powered ✨'][array_rand(5)];
+    $desc = "$emoji $name - ".$descriptions[array_rand($descriptions)];
     $cat = $categories[array_rand($categories)];
     $price = round(rand(5,500)/100,4);
     $vol = round(rand(2,25)/100,3);
